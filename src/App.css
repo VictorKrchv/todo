@@ -3,6 +3,7 @@
 }
 
 .App-logo {
+    
   height: 40vmin;
   pointer-events: none;
 }
@@ -24,6 +25,51 @@
   color: white;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.todo-app__inner {
+  padding: 10px;
+}
+ 
+.todo-item {
+  align-items: center;
+  display: flex;
+}
+
+.todo-item label {
+  cursor: pointer;
+}
+
+.todo-input {
+  width: 5%;
+}
+
+.todo-message {
+  width: 90%;
+  text-align: left;
+}
+
+.todo-delete {
+  width: 5%;
+}
+
+.todo-filters {
+  
+  display: flex;
+  justify-content: space-between;
+}
+ 
 .App-link {
   color: #61dafb;
 }
@@ -32,6 +78,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
