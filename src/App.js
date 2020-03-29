@@ -1,97 +1,138 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Button from '@material-ui/core/Button';
-import { Container, Typography } from '@material-ui/core';
-import Input from './components/Input/Input';
-import TodoItem from './components/TodoItem';
-import Filters from './components/Filters';
+import { Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-
-
+import FolderMenu from './components/FolderMenu';
+import Todos from './components/Todos';
+import Folders from './components/Folders';
 
 
 function App() {
 
-  const [todos, setTodos] = useState([])
-
-  let addTodo = (text) => {
-    setTodos([...todos, { id: Date.now(), text, isDone: false }])
-  }
-
-  let setIsDone = (id) => {
-    setTodos(todos.map(todo => {
-      if (todo.id == id) todo.isDone = !todo.isDone
-      return todo
-    }))
-  }
-
-  let deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id != id))
-  }
-
-  let deleteCompleted = () => {
-    setTodos(todos.filter(todo => !todo.isDone))
-  }
-
-  useEffect(() => {
-    const raw = localStorage.getItem('todos')
-    setTodos(JSON.parse(raw))
-
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos))
-    setSortedTodo([...todos])
-  }, [todos]);
-
+  const [folders, setFolders] = useState([]);
+  const [currentFolder, setCurrentFolder] = useState({})
   const [sortedTodo, setSortedTodo] = useState([]);
+  const [filterMode, setFilterMode] = useState('all')
 
-  const [filterMode, setFilterMode] = useState('')
 
-  useEffect(() => {
-    switch (filterMode) {
-      case 'all': {
-        setSortedTodo([...todos])
-        break;
-      }
-      case 'active': {
-        setSortedTodo(todos.filter(todo => todo.isDone))
-        break;
-      }
-      case 'done': {
-        setSortedTodo(todos.filter(todo => !todo.isDone));
-        break;
-      }
+  let addTodo = (text) => { 
+    setCurrentFolder({ ...currentFolder, todos: [...currentFolder.todos, { id: Date.now().toString(), text, isDone: false }] })
+}
+
+let setIsDone = (id) => {
+  setCurrentFolder({
+    ...currentFolder, todos: currentFolder.todos.map(todo => {
+      if (todo.id === id) todo.isDone = !todo.isDone
+      return todo
+    })
+  })
+}
+
+useEffect(() => {
+  console.log('[]')
+  const raw = localStorage.getItem('folders')
+  const raw1 = JSON.parse(raw)
+  console.log(raw1)
+  setFolders([...raw1])
+}, []);
+
+useEffect(() => {
+  console.log('FOLDERS')
+  localStorage.setItem('folders', JSON.stringify(folders))
+}, [folders]);
+
+
+let deleteTodo = (id) => {
+  setCurrentFolder({ ...currentFolder, todos: currentFolder.todos.filter(todo => todo.id !== id) })
+}
+
+let deleteCompleted = () => {
+  setCurrentFolder(currentFolder.todos.filter(todo => !todo.isDone))
+}
+
+
+useEffect(() => {
+  console.log('CURRENTFOLDER')
+  setFolders(folders.map(folder => {
+    if (folder.id === currentFolder.id) folder = currentFolder
+    return folder
+  }))
+}, [currentFolder]);
+
+
+useEffect(() => {
+  switch (filterMode) {
+    case 'all': {
+      setSortedTodo(currentFolder.todos)
+      break;
     }
-  }, [filterMode, todos])
+    case 'active': {
+      setSortedTodo(currentFolder.todos.filter(todo => todo.isDone))
+      break;
+    }
+    case 'done': {
+      setSortedTodo(currentFolder.todos.filter(todo => !todo.isDone));
+      break;
+    }
+  }
+}, [filterMode, currentFolder])
 
-  
-  return (
-    <div className="App">
-      <h1>TODO</h1>
 
-      <div className="todo-app">
-        <div className="container">
-          <Card className="todo-app__inner">
 
-            <Input addTodo={addTodo} />
-            <div className="todos">
-              {sortedTodo.length > 0 
-              ? sortedTodo.map(todo => <TodoItem key={todo.id} id={todo.id} message={todo.text} isDone={todo.isDone} setCheck={setIsDone} deleteTodo={deleteTodo} />) 
-              : <Typography variant="h3" gutterBottom >Nothing</Typography >}
+let deleteFolder = (id) => {
+  setFolders(folders.filter(folder => folder.id !== id))
+}
+
+let addFolder = () => {
+  setFolders([...folders, { name: "New folder", id: Date.now().toString(), todos: [] }])
+}
+
+let editFolder = (value, id) => {
+  setFolders(folders.map(folder => {
+    if (folder.id === id) {
+      folder.name = value
+    }
+    return folder
+  }))
+}
+
+function isEmpty(obj) {
+  for (let key in obj) {
+    return true
+  }
+  return false
+}
+
+return (
+  <div className="App">
+    <div className="todo-app">
+      <div className="container">
+        <Card className="todo-app__inner">
+          <header className="header">
+            <div><Typography variant="h4">TODO APP</Typography></div>
+
+            <div className="header-right">
+              {isEmpty(currentFolder)
+                ? <div className="header-right__form">
+                  <FolderMenu currentFolder={currentFolder} setCurrentFolder={setCurrentFolder} />
+                </div>
+                
+                : null}
             </div>
+          </header>
 
-            <Filters setFilter={setFilterMode} deleteCompleted={deleteCompleted} />
 
-          </Card>
+          {isEmpty(currentFolder)
+            ? <Todos deleteTodo={deleteTodo} addTodo={addTodo} sortedTodo={sortedTodo} deleteCompleted={deleteCompleted} setIsDone={setIsDone} setFilterMode={setFilterMode} />
+            : <Folders setFilterMode={setFilterMode} addFolder={addFolder} setSortedTodo={setSortedTodo} editFolder={editFolder} deleteFolder={deleteFolder} folders={folders} setCurrentFolder={setCurrentFolder} />}
+        </Card>
 
-        </div>
-        
       </div>
 
     </div>
-  );
+
+  </div >
+);
 }
 
 export default App;

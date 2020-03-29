@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 function Filters(props) {
 
     return <>
-        <div class="todo-filters">
+        <div className={"todo-filters"}>
             <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                 <Button onClick={() => props.setFilter('all')}>All</Button>
                 <Button onClick={() => props.setFilter('active')}>Done</Button>
