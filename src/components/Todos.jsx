@@ -16,7 +16,7 @@ const Todos = (props) => {
                 </List>
                 : <Typography style={{ marginTop: '10px' }} align="left" variant="subtitle1" gutterBottom >List is clear</Typography >}
         </div>
-        {props.sortedTodo.length > 0 ? <Filters setFilter={props.setFilterMode} deleteCompleted={props.deleteCompleted} /> : null}
+        <Filters setFilter={props.setFilterMode} deleteCompleted={props.deleteCompleted} /> 
     </>
 }
 
