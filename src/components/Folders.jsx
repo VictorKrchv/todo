@@ -23,7 +23,7 @@ const Folders = (props) => {
         }
         props.editFolder(value, id)
     } 
-
+b
     let addNewFolder = () => {
         props.addFolder()
     }

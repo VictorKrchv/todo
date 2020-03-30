@@ -123,7 +123,7 @@ function App() {
               <div className="header-right">
                 {isEmpty(currentFolder)
                   ? <div className="header-right__form">
-                    <FolderMenu currentFolder={currentFolder} setCurrentFolder={setCurrentFolder} />
+                    <FolderMenu setFilterMode={setFilterMode} currentFolder={currentFolder} setCurrentFolder={setCurrentFolder} />
                   </div>
 
                   : null}

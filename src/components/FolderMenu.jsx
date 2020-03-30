@@ -61,7 +61,7 @@ export default function FolderMenu(props) {
                     aria-haspopup="true"
                     onClick={handleToggle}
                 >
-                   <FolderOpenIcon style={{ color: grey[800] }}/>  <span style={{ color: grey[800], marginLeft: '5px' }}>{props.currentFolder.name}</span>
+                    <FolderOpenIcon style={{ color: grey[800] }} />  <span style={{ color: grey[800], marginLeft: '5px' }}>{props.currentFolder.name}</span>
                 </Button>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition >
                     {({ TransitionProps, placement }) => (
@@ -73,7 +73,10 @@ export default function FolderMenu(props) {
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                         <MenuItem onClick={handleClose}>Some text</MenuItem>
-                                        <MenuItem onClick={() => props.setCurrentFolder({})}>Exit</MenuItem>
+                                        <MenuItem onClick={() => {
+                                            props.setFilterMode('all')
+                                            props.setCurrentFolder({})
+                                        }}>Exit</MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
