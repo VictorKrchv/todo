@@ -57,27 +57,15 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('[]')
     const raw = localStorage.getItem('folders')
     setFolders(JSON.parse(raw))
   }, []);
 
   useEffect(() => {
-    console.log('FOLDERS')
     localStorage.setItem('folders', JSON.stringify(folders))
   }, [folders]);
 
 
-
-
-
-  // useEffect(() => {
-  //   console.log('CURRENTFOLDER')
-  //   setFolders(folders.map(folder => {
-  //     if (folder.id === currentFolder.id) folder = currentFolder
-  //     return folder
-  //   }))
-  // }, [currentFolder]);
 
 
   useEffect(() => {
@@ -94,8 +82,9 @@ function App() {
         setSortedTodo(currentFolder.todos.filter(todo => !todo.isDone));
         break;
       }
+      default: return 
     }
-  }, [filterMode, folders])
+  }, [filterMode, folders, currentFolder.todos])
 
 
 

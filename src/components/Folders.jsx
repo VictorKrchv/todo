@@ -41,7 +41,9 @@ const Folders = (props) => {
                         <ListItemIcon>
                             <FolderIcon />
                         </ListItemIcon>
-                        {folder.id !== editMode ? <ListItemText primary={folder.name} /> : <Input onChange={(e) => setValue(e.currentTarget.value)} value={value} onBlur={() => setNewName(folder.id)} autoFocus onClick={() => false} defaultValue="Hello world" />}
+                        {folder.id !== editMode 
+                        ? <ListItemText primary={folder.name} /> 
+                        : <Input onChange={(e) => setValue(e.currentTarget.value)} value={value} onBlur={() => setNewName(folder.id)} autoFocus onClick={() => false}  />}
                         <ListItemSecondaryAction>
                             <IconButton onClick={() => {
                                 setValue(folder.name) 

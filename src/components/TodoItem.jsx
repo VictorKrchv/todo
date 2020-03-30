@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, IconButton, Typography, Divider, ListItemIcon, ListItem, ListItemText } from '@material-ui/core';
+import { Checkbox, IconButton,  ListItemIcon, ListItem, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 

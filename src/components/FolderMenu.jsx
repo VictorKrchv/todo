@@ -69,7 +69,7 @@ export default function FolderMenu(props) {
                             {...TransitionProps}
                             style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
                         >
-                            <Paper zIndex="1050">
+                            <Paper >
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                         <MenuItem onClick={handleClose}>Some text</MenuItem>
